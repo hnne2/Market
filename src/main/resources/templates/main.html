@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+</head>
+<body>
+<h2 style="text-align: center;">Каталог</h2>
+
+<a href="/logout">Выйти</a>
+<p></p>
+<a href="/basket">Перейти в корзину</a>
+
+<div class="carts-container" style="text-align: center;">
+    <div class="carts" th:each="cart : ${carts}" style="display: inline-block; margin-right: 10px; text-align: center;">
+        <img class="cartImg" th:src="${cart.getPicLink()}" width="300">
+        <p class="cartName" th:text="${cart.getItemName()}"></p>
+        <p  class="cartPrice" th:text="${cart.getItemPrice()}"></p>
+        <form th:action="@{/add-to-cart/{cartId}(cartId=${cart.id})}" method="post">
+            <button class="cart-button" type="submit">в корзину</button>
+        </form>
+    </div>
+</div>
+
+
+
+<style>
+    .carts {
+        display: inline-block;
+        width: calc(33.33% - 100px); /* 33.33% ширины, минус 20px для учета отступов */
+        margin-right: 50px; /* Отступ между элементами */
+        vertical-align: top; /* Выравнивание по верхнему краю (можно изменить по необходимости) */
+        text-align: center; /* Центрирование содержимого */
+        box-sizing: border-box; /* Учитываем padding и border в расчетах ширины */
+        margin-bottom: 50px; /* Отступ между рядами */
+    }
+    * {
+        box-sizing: border-box;
+    }
+
+    .cartImg {
+        transition: 1s ease-in-out;
+    }
+    .cartImg:hover {
+        transform: scale(1.1);
+    }
+    .product-img img {
+        display: block;
+        width: 100%;
+    }
+    .carts-container {
+        margin-top: 15px;
+    }
+    .product-list h3 {
+        font-weight: 700;
+        color: #39404B;
+        margin: 0;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 2;
+    }
+    .cartPrice {
+        color: #E34D38;
+        display: block;
+        margin-bottom: 12px;
+    }
+    .stars {
+        height: 14px;
+        line-height: 14px;
+        margin: 7px 0;
+    }
+    .stars:before {
+        content: "\f005\f005\f005\f005\f006";
+        color: #EFB71C;
+        font-size: 14px;
+        font-family: FontAwesome;
+    }
+    .actions {
+        border-top: 1px solid #eee;
+        padding-top: 4px;
+        font-size: 13px;
+        height: 30px;
+        line-height: 30px;
+    }
+    .actions:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    .add-to-cart, .add-to-links {
+        float: left;
+    }
+    .cart-button {
+        text-decoration: none;
+        color: #8C877C;
+        padding-right: 20px;
+        border-right: 1px solid #ddd;
+        transition: .4s linear;
+    }
+    .cart-button:before {
+        content: "\f07a";
+        font-family: FontAwesome;
+        margin-right: 10px;
+    }
+    .add-to-cart:hover .cart-button, .wishlist:hover, .compare:hover {
+        color: #E34D38;
+    }
+    .wishlist, .compare {
+        color: #8C877C;
+        padding-left: 20px;
+        transition: .4s linear;
+    }
+    .wishlist:after, .compare:after {
+        display: inline-block;
+        font-family: FontAwesome;
+        font-size: 13px;
+    }
+    .wishlist:after {
+        content: "\f004";
+    }
+    .compare:after {
+        content: "\f079";
+    }
+</style>
+</body>
+</html>
