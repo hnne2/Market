@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: ru.alishev.springcourse.FirstSecurityApp.MarketApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.218 s <<< FAILURE! - in ru.alishev.springcourse.FirstSecurityApp.MarketApplicationTests
+ru.alishev.springcourse.FirstSecurityApp.MarketApplicationTests  Time elapsed: 0.217 s  <<< ERROR!
+java.lang.IllegalStateException: Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes=...) with your test
+
