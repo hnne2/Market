@@ -40,7 +40,7 @@ public class HelloController {
         for (int i = 0; i < carts.size(); i++) {
             System.out.println(carts.get(i).getItemName());
         }
-        return "/main";
+        return "main";
     }
 
     @GetMapping("/showUserInfo")
@@ -85,7 +85,7 @@ public class HelloController {
         }
 
         model.addAttribute("basket",cartList);
-        return "/basket";
+        return "basket";
     }
 
 }
