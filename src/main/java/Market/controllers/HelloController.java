@@ -88,8 +88,8 @@ public class HelloController {
             System.out.println("добавил карточку в корзину"+cartList.get(i));
         }
 
-        model.addAttribute("basket",cartList);
-        return "/basket";
+        model.addAttribute("carts",cartList);
+        return "/fragments/basket";
     }
 
     @GetMapping("/search/{char}")
@@ -98,7 +98,7 @@ public class HelloController {
 
         model.addAttribute("carts", cartList);
 
-        return "/fragments/cartList";
+        return "main";
     }
 
 }

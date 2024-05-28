@@ -1,30 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
+    <title>Cart List</title>
     <style>
-        /* Header Styles */
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        /* Footer Styles */
-        footer {
-            background-color: #333333;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-        }
-
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f0f2f5;
@@ -67,18 +46,16 @@
         .carts-container {
             text-align: center;
             margin-top: 20px;
-
         }
 
         .carts {
-            margin-bottom: 200px;
             display: inline-block;
             margin-right: 20px;
             text-align: center;
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 40px;
+            padding: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -122,63 +99,20 @@
 
         a {
             display: block;
-            text-align: right;
-            margin-right: 50px;
+            text-align: center;
             margin-top: 20px;
             color: #4CAF50;
             text-decoration: none;
-            position: relative;
         }
 
         a:hover {
             text-decoration: underline;
         }
-
-        .slider {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        .slides {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .slide {
-            min-width: 100%;
-            overflow: hidden;
-        }
-
-        .slide img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .links-container {
-            text-align: left;
-        }
-
-        .links-container a {
-            display: inline-block;
-            margin-bottom: 100px;
-            margin-right: 10px; /* Добавляет небольшой отступ между ссылками */
-            color: #4CAF50;
-            text-decoration: none;
-        }
-        .footer{
-            max-height: 30px;
-        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>MAGAZIN</h1>
-</header>
-
-<h2>Каталог</h2>
+<h2>Корзина</h2>
 
 <div class="search-container">
     <form id="search-form" action="" method="get" onsubmit="updateFormAction(event)">
@@ -186,41 +120,18 @@
         <button class="search-button" type="submit">Искать</button>
     </form>
 </div>
+<a href="/logout">Выйти</a>
 <p></p>
-<div class="slider">
-    <div class="slides">
-        <div class="slide">
-            <img src="https://s3.yandexcloud.net/toptop-storage-production/main_page_blocks/list_promo_element_images/contents/000/000/006/main/%D0%B7%D1%85_%D0%BC%D0%BE%D0%B13.jpg?1712839832" alt="Slide 1">
-        </div>
-        <div class="slide">
-            <img src="https://s3.yandexcloud.net/toptop-storage-production/main_page_blocks/promo_images/contents/000/000/032/original/1_%2880%29.jpg?1713357428" alt="Slide 2">
-        </div>
-        <div class="slide">
-            <img src="https://s3.yandexcloud.net/toptop-storage-production/main_page_blocks/list_promo_element_images/contents/000/000/029/main/%D0%B7%D1%85_%D0%BC%D0%BE%D0%B12.jpg?1712839834" alt="Slide 3">
-        </div>
-    </div>
-</div>
-
+<a href="/main">На главную</a>
 
 <div class="carts-container">
     <div class="carts" th:each="cart : ${carts}">
         <img class="cartImg" th:src="${cart.getPicLink()}" alt="Product Image">
         <p class="cartName" th:text="${cart.getItemName()}"></p>
         <p class="cartPrice" th:text="${cart.getItemPrice()}"></p>
-        <form th:action="@{/add-to-cart/{cartId}(cartId=${cart.id})}" method="post">
-            <button class="cart-button" type="submit">В корзину</button>
-        </form>
+
     </div>
 </div>
-<div class="links-container">
-    <a href="/logout">Выйти</a>
-    <a href="/main">На главную</a>
-    <a href="/basket">Перейти в корзину</a>
-</div>
-<footer class="footer">
-    <p>© 2024 Magazin. Все права защищены.</p>
-
-</footer>
 
 <script>
     function updateFormAction(event) {
@@ -230,19 +141,6 @@
         form.action = '/search/' + encodeURIComponent(query);
         form.submit(); // Submit the form with the new action
     }
-    const slides = document.querySelector('.slides');
-    const slide = document.querySelectorAll('.slide');
-    const slideWidth = slide[0].clientWidth;
-
-    let counter = 0;
-
-    setInterval(() => {
-        counter++;
-        if (counter === slide.length) {
-            counter = 0;
-        }
-        slides.style.transform = `translateX(${-slideWidth * counter}px)`;
-    }, 5000);
 </script>
 </body>
 </html>

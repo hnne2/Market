@@ -3,15 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333333;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #45a049;
+        }
+
+        .carts-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .carts {
+            display: inline-block;
+            margin-right: 20px;
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .carts:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .cartImg {
+            width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+        }
+
+        .cartName {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .cartPrice {
+            color: #4CAF50;
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        .cart-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .cart-button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h2 style="text-align: center;">Каталог</h2>
+
+<h2>Корзина</h2>
 
 <div class="search-container">
     <form id="search-form" action="" method="get" onsubmit="updateFormAction(event)">
-        <label>
-            <input class="search-input" type="text" id="search-query" name="query" placeholder="Поиск...">
-        </label>
+        <input class="search-input" type="text" id="search-query" name="query" placeholder="Поиск...">
         <button class="search-button" type="submit">Искать</button>
     </form>
 </div>
@@ -19,16 +124,17 @@
 <p></p>
 <a href="/main">На главную</a>
 <a href="/basket">Перейти в корзину</a>
-<div class="carts-container" style="text-align: center;">
-    <div class="carts" th:each="cart : ${carts}" style="display: inline-block; margin-right: 10px; text-align: center;">
-        <img class="cartImg" th:src="${cart.getPicLink()}" width="300">
+<div class="carts-container">
+    <div class="carts" th:each="cart : ${carts}">
+        <img class="cartImg" th:src="${cart.getPicLink()}" alt="Product Image">
         <p class="cartName" th:text="${cart.getItemName()}"></p>
         <p class="cartPrice" th:text="${cart.getItemPrice()}"></p>
         <form th:action="@{/add-to-cart/{cartId}(cartId=${cart.id})}" method="post">
-            <button class="cart-button" type="submit">в корзину</button>
+            <button class="cart-button" type="submit">В корзину</button>
         </form>
     </div>
 </div>
+
 <script>
     function updateFormAction(event) {
         event.preventDefault(); // Prevent the default form submission
@@ -38,115 +144,5 @@
         form.submit(); // Submit the form with the new action
     }
 </script>
-<style>
-    .search-container {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .search-input {
-        padding: 10px;
-        font-size: 16px;
-    }
-    .search-button {
-        padding: 10px;
-        font-size: 16px;
-    }
-    .carts {
-        display: inline-block;
-        width: calc(33.33% - 100px); /* 33.33% ширины, минус 20px для учета отступов */
-        margin-right: 50px; /* Отступ между элементами */
-        vertical-align: top; /* Выравнивание по верхнему краю (можно изменить по необходимости) */
-        text-align: center; /* Центрирование содержимого */
-        box-sizing: border-box; /* Учитываем padding и border в расчетах ширины */
-        margin-bottom: 50px; /* Отступ между рядами */
-    }
-    * {
-        box-sizing: border-box;
-    }
-
-    .cartImg {
-        transition: 1s ease-in-out;
-    }
-    .cartImg:hover {
-        transform: scale(1.1);
-    }
-    .product-img img {
-        display: block;
-        width: 100%;
-    }
-    .carts-container {
-        margin-top: 15px;
-    }
-    .product-list h3 {
-        font-weight: 700;
-        color: #39404B;
-        margin: 0;
-        text-transform: uppercase;
-        font-size: 14px;
-        line-height: 2;
-    }
-    .cartPrice {
-        color: #E34D38;
-        display: block;
-        margin-bottom: 12px;
-    }
-    .stars {
-        height: 14px;
-        line-height: 14px;
-        margin: 7px 0;
-    }
-    .stars:before {
-        content: "\f005\f005\f005\f005\f006";
-        color: #EFB71C;
-        font-size: 14px;
-        font-family: FontAwesome;
-    }
-    .actions {
-        border-top: 1px solid #eee;
-        padding-top: 4px;
-        font-size: 13px;
-        height: 30px;
-        line-height: 30px;
-    }
-    .actions:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-    .add-to-cart, .add-to-links {
-        float: left;
-    }
-    .cart-button {
-        text-decoration: none;
-        color: #8C877C;
-        padding-right: 20px;
-        border-right: 1px solid #ddd;
-        transition: .4s linear;
-    }
-    .cart-button:before {
-        content: "\f07a";
-        font-family: FontAwesome;
-        margin-right: 10px;
-    }
-    .add-to-cart:hover .cart-button, .wishlist:hover, .compare:hover {
-        color: #E34D38;
-    }
-    .wishlist, .compare {
-        color: #8C877C;
-        padding-left: 20px;
-        transition: .4s linear;
-    }
-    .wishlist:after, .compare:after {
-        display: inline-block;
-        font-family: FontAwesome;
-        font-size: 13px;
-    }
-    .wishlist:after {
-        content: "\f004";
-    }
-    .compare:after {
-        content: "\f079";
-    }
-</style>
 </body>
 </html>
